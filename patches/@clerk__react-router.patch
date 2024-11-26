@@ -1,0 +1,79 @@
+diff --git a/dist/client/PassedHooksContext.d.ts b/dist/client/PassedHooksContext.d.ts
+deleted file mode 100644
+index 38faabf43cf6a32fa28c692dfcb9f52039b399be..0000000000000000000000000000000000000000
+diff --git a/dist/client/PassedHooksContext.js b/dist/client/PassedHooksContext.js
+deleted file mode 100644
+index 2440a9410729541df7513139eb004427129ab746..0000000000000000000000000000000000000000
+diff --git a/dist/client/PassedHooksContext.js.map b/dist/client/PassedHooksContext.js.map
+deleted file mode 100644
+index 706787bab6c88390f02552ff52171bb08d9ca884..0000000000000000000000000000000000000000
+diff --git a/dist/client/ReactRouterClerkProvider.js b/dist/client/ReactRouterClerkProvider.js
+index 8dee196d158469055afe2b361b51f78c0e28c7f7..c1d85690de16eb25230d51c6740a89cf7db559a8 100644
+--- a/dist/client/ReactRouterClerkProvider.js
++++ b/dist/client/ReactRouterClerkProvider.js
+@@ -2,7 +2,6 @@
+ import { ClerkProvider as ReactClerkProvider } from "@clerk/clerk-react";
+ import React from "react";
+ import { assertPublishableKeyInSpaMode, assertValidClerkState, inSpaMode, warnForSsr } from "../utils/index.js";
+-import { PassedHooksProvider } from "./PassedHooksContext.js";
+ import { ClerkReactRouterOptionsProvider } from "./ReactRouterOptionsContext.js";
+ import { useAwaitableNavigate } from "./useAwaitableNavigate.js";
+ export * from "@clerk/clerk-react";
+@@ -89,7 +88,7 @@ function ClerkProviderBase({ children, ...rest }) {
+     children
+   ));
+ }
+-var ClerkProvider = ({ children, loaderData, navigate, location, params, ...opts }) => {
++var ClerkProvider = ({ children, loaderData, ...opts }) => {
+   let clerkState;
+   const isSpaMode = inSpaMode();
+   if (!isSpaMode) {
+@@ -98,14 +97,14 @@ var ClerkProvider = ({ children, loaderData, navigate, location, params, ...opts
+   if (isSpaMode) {
+     assertPublishableKeyInSpaMode(opts.publishableKey);
+   }
+-  return /* @__PURE__ */ React.createElement(PassedHooksProvider, { options: { navigate, location, params } }, /* @__PURE__ */ React.createElement(
++  return /* @__PURE__ */ React.createElement(
+     ClerkProviderBase,
+     {
+       ...opts,
+       clerkState
+     },
+     children
+-  ));
++  );
+ };
+ export {
+   ClerkProvider
+diff --git a/dist/client/useAwaitableNavigate.js b/dist/client/useAwaitableNavigate.js
+index 4788ed52a19abfd6c4381b61955fd218d5036613..ed38da9e48e1e09a91db8f08c45c9cba96a23b0b 100644
+--- a/dist/client/useAwaitableNavigate.js
++++ b/dist/client/useAwaitableNavigate.js
+@@ -1,8 +1,9 @@
+ // src/client/useAwaitableNavigate.tsx
+ import React from "react";
+-import { usePassedHooks } from "./PassedHooksContext.js";
++import { useLocation, useNavigate } from 'react-router';
+ var useAwaitableNavigate = () => {
+-  const { navigate, location } = usePassedHooks();
++  const navigate = useNavigate();
++  const location = useLocation();
+   const resolveFunctionsRef = React.useRef([]);
+   const resolveAll = () => {
+     resolveFunctionsRef.current.forEach((resolve) => resolve());
+diff --git a/dist/client/usePathnameWithoutSplatRouteParams.js b/dist/client/usePathnameWithoutSplatRouteParams.js
+index fea0bb5c6475df14bb47a611ecb27018bd1dd021..aea66a152fc3706a8ca278023ad13fa2092ce2de 100644
+--- a/dist/client/usePathnameWithoutSplatRouteParams.js
++++ b/dist/client/usePathnameWithoutSplatRouteParams.js
+@@ -1,8 +1,8 @@
+ // src/client/usePathnameWithoutSplatRouteParams.tsx
+-import { usePassedHooks } from "./PassedHooksContext.js";
++import { useLocation, useParams } from 'react-router';
+ var usePathnameWithoutSplatRouteParams = () => {
+-  const { params, location } = usePassedHooks();
+-  const { pathname } = location;
++  const params = useParams();
++  const { pathname } = useLocation();
+   const splatRouteParam = params["*"] || "";
+   const path = pathname.replace(splatRouteParam, "").replace(/\/$/, "").replace(/^\//, "").trim();
+   return `/${path}`;

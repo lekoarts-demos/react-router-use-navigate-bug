@@ -1,10 +1,8 @@
-import { data, useLocation } from 'react-router';
+import { data , Await, Links, Meta, Outlet, Scripts, ScrollRestoration , DataStrategyFunctionArgs } from 'react-router';
 import type { MetaFunction } from 'react-router';
-import { Await, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { rootAuthLoader } from '@clerk/react-router/ssr.server';
 import { ClerkProvider } from '@clerk/react-router';
 import { Suspense } from 'react';
-import { DataStrategyFunctionArgs, useNavigate, useParams } from 'react-router';
 
 export const loader = (args: DataStrategyFunctionArgs) => {
   return rootAuthLoader(
@@ -62,12 +60,8 @@ export function Layout({ children }) {
 }
 
 export default function App({ loaderData }) {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const params = useParams()
-
   return (
-    <ClerkProvider loaderData={loaderData} navigate={navigate} location={location} params={params}>
+    <ClerkProvider loaderData={loaderData}>
       <Suspense fallback="Loading...">
         <Await resolve={loaderData.data}>
           {val => (<>Hello {val.foo}</>)}

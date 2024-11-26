@@ -4,13 +4,18 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@clerk/react-router':
+    hash: zvwdwt3ijrenpt3r4nxd727nna
+    path: patches/@clerk__react-router.patch
+
 importers:
 
   .:
     dependencies:
       '@clerk/react-router':
         specifier: 0.0.1-snapshot.v20241125152946
-        version: 0.0.1-snapshot.v20241125152946(react-dom@18.3.1(react@18.3.1))(react-router@7.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 0.0.1-snapshot.v20241125152946(patch_hash=zvwdwt3ijrenpt3r4nxd727nna)(react-dom@18.3.1(react@18.3.1))(react-router@7.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@react-router/node':
         specifier: 7.0.1
         version: 7.0.1(react-router@7.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.7.2)
@@ -2630,7 +2635,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       tslib: 2.4.1
 
-  '@clerk/react-router@0.0.1-snapshot.v20241125152946(react-dom@18.3.1(react@18.3.1))(react-router@7.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@clerk/react-router@0.0.1-snapshot.v20241125152946(patch_hash=zvwdwt3ijrenpt3r4nxd727nna)(react-dom@18.3.1(react@18.3.1))(react-router@7.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@clerk/backend': 1.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/clerk-react': 5.17.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
